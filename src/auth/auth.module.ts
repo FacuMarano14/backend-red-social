@@ -16,7 +16,7 @@ import { CloudinaryModule } from '../cloudinary/cloudinary.module';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '15m' },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     CloudinaryModule
