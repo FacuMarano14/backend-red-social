@@ -5,12 +5,13 @@ import { CommentsController } from './comments.controller';
 import { Comment, CommentSchema } from './schemas/comment.schema';
 import { PostsModule } from '../posts/posts.module';
 import { UsersModule } from '../users/users.module';
+import { forwardRef } from '@nestjs/common';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
-    PostsModule,
-    UsersModule
+    forwardRef(() => PostsModule),
+    forwardRef(() => UsersModule),
   ],
   controllers: [CommentsController],
   providers: [CommentsService],

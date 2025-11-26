@@ -57,7 +57,7 @@ export class PostsController {
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string, @Request() req) {
-    const isAdmin = req.user?.perfil === 'administrador';
+    const isAdmin = req.user?.perfil === 'admin' || req.user?.perfil === 'administrador';
     return this.postsService.delete(id, req.user.userId, isAdmin);
   }
 
