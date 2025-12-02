@@ -4,13 +4,15 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User, UserSchema } from './schemas/user.schema';
 import { PostsModule } from 'src/posts/posts.module';
-import { CloudinaryModule } from 'src/cloudinary/cloudinary.module'; // <-- agregado
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module'; 
+import { StatsModule } from 'src/stats/stats.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     forwardRef(() => PostsModule),
-    CloudinaryModule, // <-- agregado
+    CloudinaryModule, 
+    forwardRef(() => StatsModule)
   ],
   providers: [UsersService],
   controllers: [UsersController],
