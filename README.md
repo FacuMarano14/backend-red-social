@@ -1,98 +1,94 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Red Social — Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST para una red social desarrollada como TP integrador de Programación IV (UTN Avellaneda). Construida con **NestJS** y **MongoDB**, con autenticación JWT, roles de usuario, publicaciones con likes/comentarios, guardados, compartidos y estadísticas para dashboards.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+🔗 **Repo del frontend:** [frontend-red-social](https://github.com/FacuMarano14/frontend-red-social)
+🔗 **Demo en vivo:** [frontend-red-social-vert.vercel.app](https://frontend-red-social-vert.vercel.app/)
 
-## Description
+> ⚠️ El backend corre en el free tier de Render, así que la primera petición después de un rato de inactividad puede tardar hasta 50 segundos en responder (se "duerme" el servidor).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🛠️ Stack
 
-```bash
-$ npm install
+<a href="https://skillicons.dev">
+  <img src="https://skillicons.dev/icons?i=nestjs,mongodb,ts,nodejs" />
+</a>
+
+- **NestJS 11** — framework backend bajo arquitectura modular (MVC)
+- **MongoDB + Mongoose 8** — base de datos y modelado de esquemas
+- **Passport + JWT** — autenticación y autorización basada en roles
+- **Bcrypt** — hash de contraseñas
+- **Cloudinary** — almacenamiento y entrega de imágenes (perfil y publicaciones)
+- **Class Validator / Class Transformer** — validación de DTOs
+
+---
+
+## 📦 Módulos
+
+| Módulo | Responsabilidad |
+|---|---|
+| `auth` | Registro, login, generación/validación/refresco de tokens JWT (expiran a los 15 min), roles `usuario` / `administrador` |
+| `users` | CRUD de usuarios, alta y baja lógica (habilitar/deshabilitar), solo accesible por administradores |
+| `posts` | Publicaciones: alta, baja lógica, likes, guardados, compartidos, paginación y ordenamiento (fecha / likes / guardados / compartidos) |
+| `comments` | Comentarios de una publicación: creación, edición (con marca de "editado"), listado paginado |
+| `stats` | Endpoints de estadísticas para los gráficos del dashboard (publicaciones y comentarios por usuario/tiempo, likes por día, logins, visitas a perfil) |
+| `cloudinary` | Subida y gestión de imágenes de perfil y publicaciones |
+| `database` | Conexión y configuración de Mongoose |
+| `common` | Guards, decoradores y utilidades compartidas entre módulos |
+
+---
+
+## ⚙️ Variables de entorno
+
+Creá un archivo `.env` en la raíz con:
+
+```env
+PORT=3000
+MONGO_URI=tu_connection_string_de_mongodb_atlas
+JWT_SECRET=tu_secreto_para_firmar_los_tokens
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
 ```
 
-## Compile and run the project
+---
+
+## 🚀 Instalación y uso
 
 ```bash
-# development
-$ npm run start
+# Instalar dependencias
+npm install
 
-# watch mode
-$ npm run start:dev
+# Modo desarrollo (con recarga automática)
+npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Modo producción
+npm run build
+npm run start:prod
 ```
 
-## Run tests
+## 🧪 Tests
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test        # unit tests
+npm run test:e2e     # end-to-end
+npm run test:cov     # coverage
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🔐 Autenticación
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- El login/registro devuelve un **JWT** que expira a los **15 minutos**.
+- `POST /auth/authorize` — valida si un token sigue vigente y devuelve los datos del usuario (401 si no).
+- `POST /auth/refresh` — renueva el token manteniendo el mismo payload.
+- Todas las respuestas usan códigos de estado correctos (`201` creado, `400` bad request, `401` no autorizado, etc.), sin `200` en errores.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+---
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 👤 Autor
 
-## Resources
+**Facundo Marano** — [GitHub](https://github.com/FacuMarano14) · [LinkedIn](https://www.linkedin.com/in/facundo-marano-1b189628b) · [Portfolio](https://portfolio-hazel-seven-37.vercel.app/)
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Proyecto académico — Tecnicatura Universitaria en Programación, UTN Avellaneda.
